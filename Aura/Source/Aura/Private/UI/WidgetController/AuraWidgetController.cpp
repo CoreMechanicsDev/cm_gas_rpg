@@ -11,3 +11,13 @@ void UAuraWidgetController::SetWidgetControllerParams(const FWidgetControllerPar
 	AbilitySystemComponent = WCParams.AbilitySystemComponent;
 	AttributeSet = WCParams.AttributeSet;
 }
+
+void UAuraWidgetController::BroadcastInitialValues()
+{
+	// Empty because we'll only define this elsewhere
+}
+
+void UAuraWidgetController::BindCallbacksToDependencies()
+{
+	// This will be overridden
+}

@@ -15,6 +15,10 @@ UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetCont
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		// Set params
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
+		
+		//Bind Callbacks Now that Params are set so that if any attributes change it will be broadcast
+		OverlayWidgetController->BindCallbacksToDependencies();
+		
 		// Return it
 		return OverlayWidgetController;
 	}
@@ -37,11 +41,15 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	// Initialize parameters into const struct
 	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
 	
-	// Call the Getter function and store the results in WidgetContorller to finish construction
+	// Call the Getter function (defined ablve) and store the results in WidgetContorller to finish construction
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
+	// ^^ Variable Type       ^^ Variable Name   ^^ Variable Value
 	
-	// Now set the controller
+	// Now set the controller - only broadcast values after this is done
 	OverlayWidget->SetWidgetController(WidgetController);
+	
+	// Broadcast initial values now that controller is set up
+	WidgetController->BroadcastInitialValues();
 	
 	// Add it to viewport
 	Widget->AddToViewport();

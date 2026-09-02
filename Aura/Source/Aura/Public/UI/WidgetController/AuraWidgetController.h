@@ -52,6 +52,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
 	
+	// function to broadcast initial values
+	virtual void BroadcastInitialValues();
+	
+	// function to bind callbacks for widget controllers
+	virtual void BindCallbacksToDependencies();
+	
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category="WidgetController")
